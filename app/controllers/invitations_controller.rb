@@ -8,13 +8,10 @@ class InvitationsController < ApplicationController
 
   def create
     @invitation = Invitation.new(invitation_params)
-    if User.find_by(email: @invitation.email, organization_id: @invitation.organization_id)
+    if user_already_exists?
       flash.now[:alert] = "That user already exists"
-      puts("That user already exists")
       render :new, status: :unprocessable_entity
-      return
-    end
-    if @invitation.save
+    elsif @invitation.save
       send_email_invite
       redirect_to root_path, notice: "Invitation sent successfully"
     else
@@ -23,6 +20,7 @@ class InvitationsController < ApplicationController
   end
 
   def index
+    @invitations = Invitation.all
   end
 
   private
@@ -33,5 +31,9 @@ class InvitationsController < ApplicationController
 
   def send_email_invite
     UserMailer.with(invitation: @invitation).invitation.deliver_later
+  end
+
+  def user_already_exists?
+    User.find_by(email: @invitation.email, organization_id: @invitation.organization_id)
   end
 end

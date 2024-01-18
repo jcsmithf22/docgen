@@ -1,7 +1,7 @@
 <%= render 'layouts/application/card' do %>
   <p style="color: red"><%= alert %></p>
 
-  <% if Current.user.verified? %>
+  <% if @valid %>
     <h1 class="text-center text-2xl mb-8">Change your email</h1>
   <% else %>
     <h1 class="text-center text-2xl mb-8">Verify your email</h1>

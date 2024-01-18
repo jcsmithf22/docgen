@@ -8,8 +8,9 @@
   <h2 class="font-medium text-lg">Admin section</h2>
 
   <div class="flex flex-col w-fit items-start">
-    <%= link_to "Add user", users_new_path %>
-    <%= link_to "View users", users_path %>
+    <%= link_to "Invite user", new_invitation_path %>
+    <%= link_to "Manage users", users_path %>
+    <%= link_to "Manage invites", invitations_path %>
   </div>
 
 <% end %>
