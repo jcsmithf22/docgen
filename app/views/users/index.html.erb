@@ -1,0 +1,12 @@
+<div>
+  <h1>All Users</h1>
+
+  <ul>
+    <% @users.each do |user| %>
+      <li>
+        <%= user.email %> - <%= user.role %>
+        <!-- Add other user attributes you want to display here -->
+      </li>
+    <% end %>
+  </ul>
+</div>

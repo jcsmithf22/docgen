@@ -1,0 +1,33 @@
+<%= render 'layouts/application/card' do %>
+
+  <h1 class="text-center text-2xl mb-8">Sign in</h1>
+
+  <%= form_with(url: sign_in_path) do |form| %>
+    <div class="mb-6">
+      <%= form.label :email, class: "block text-sm" %>
+      <%= form.email_field :email, value: params[:email_hint], required: true, autofocus: true, autocomplete: "email", class: "mt-1 input" %>
+    </div>
+
+    <div class="mb-6">
+      <%= form.label :password, class: "block text-sm" %>
+      <%= form.password_field :password, required: true, autocomplete: "current-password", class: "mt-1 input" %>
+    </div>
+
+    <div>
+      <%= form.submit "Sign in", class: "btn-primary" %>
+    </div>
+
+    <p class="text-red-600 mt-6 text-sm"><%= alert %></p>
+
+  <% end %>
+
+  <br>
+
+
+  <br>
+
+  <div>
+    <%= link_to "Forgot your password?", new_identity_password_reset_path %>
+  </div>
+
+<% end %>

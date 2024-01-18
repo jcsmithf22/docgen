@@ -1,0 +1,8 @@
+<p>Hey there from Doc Gen,</p>
+
+<p>You have been invited to join <%= @organization %></p>
+
+<p><strong>You must hit the link continue to account creation.</strong></p>
+
+<p><%= link_to "Create my account", users_new_url(token: @token) %></p>
+

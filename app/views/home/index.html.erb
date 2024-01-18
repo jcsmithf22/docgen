@@ -1,0 +1,35 @@
+<p>Signed as <%= Current.user.email %></p>
+<p>Organization: <%= Current.user.organization.name %></p>
+<p>Role: <%= Current.user.role %></p>
+<p>Verified: <%= Current.user.verified %></p>
+
+<% if Current.user.admin? %>
+
+  <h2 class="font-medium text-lg">Admin section</h2>
+
+  <div class="flex flex-col w-fit items-start">
+    <%= link_to "Add user", users_new_path %>
+    <%= link_to "View users", users_path %>
+  </div>
+
+<% end %>
+
+<h2 class="font-medium text-lg">Login and verification</h2>
+
+<div>
+  <%= link_to "Change password", edit_password_path %>
+</div>
+
+<div>
+  <%= link_to "Change email address", edit_identity_email_path %>
+</div>
+
+<h2 class="font-medium text-lg">Access history</h2>
+
+<div>
+  <%= link_to "Devices & Sessions", sessions_path %>
+</div>
+
+<br>
+
+<%= button_to "Log out", Current.session, method: :delete %>

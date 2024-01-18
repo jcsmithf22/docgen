@@ -1,0 +1,53 @@
+<%= render 'layouts/application/card' do %>
+  <h1 class="text-center text-2xl mb-8">Join <%= @user.organization.name %></h1>
+
+  <%= form_with(url: users_new_path) do |form| %>
+    <% if @user.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+        <ul>
+          <% @user.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="mb-6">
+      <%#= form.label :email, class: "block text-sm" %>
+      <%#= form.email_field :email, value: @user.email, required: true, autofocus: true, autocomplete: "email", class: "mt-1 input" %>
+      <p>Welcome <span class="font-bold"><%= @user.email %></span>!</p>
+    </div>
+
+    <%= form.hidden_field :email, value: @user.email %>
+    <%= form.hidden_field :organization_id, value: @user.organization_id %>
+    <%= form.hidden_field :token, value: params[:token] %>
+
+    <div class="mb-6">
+      <%= form.label :first_name, class: "block text-sm" %>
+      <%= form.text_field :first_name, required: true, autocomplete: "given-name", class: "mt-1 input" %>
+    </div>
+
+    <div class="mb-6">
+      <%= form.label :last_name, class: "block text-sm" %>
+      <%= form.text_field :last_name, required: true, autocomplete: "family-name", class: "mt-1 input" %>
+    </div>
+
+    <div class="mb-6">
+      <%= form.label :password, class: "block text-sm" %>
+      <%= form.password_field :password, required: true, autocomplete: "new-password", class: "mt-1 input" %>
+      <div class="text-sm mt-1">12 characters minimum.</div>
+    </div>
+
+    <div class="mb-6">
+      <%= form.label :password_confirmation, class: "block text-sm" %>
+      <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", class: "mt-1 input" %>
+    </div>
+
+    <div>
+      <%= form.submit "Sign up", class: "btn-primary" %>
+    </div>
+
+  <% end %>
+<% end %>

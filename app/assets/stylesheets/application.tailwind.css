@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .btn-primary {
+        @apply bg-black rounded-lg text-white px-3 py-2 hover:bg-black/80;
+    }
+
+    .input {
+        @apply rounded-lg w-full text-sm h-10 border-zinc-300;
+    }
+}
+
+@layer utilities {
+    @keyframes flashIn {
+        from {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    @keyframes flashOut {
+        from {
+            opacity: 1;
+            transform: scale(1);
+        }
+        to {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+    }
+    .flashOut {
+        animation: flashOut 200ms ease-in-out forwards;
+    }
+
+    .flashIn {
+        animation: flashIn 200ms ease-in-out forwards;
+    }
+}
+
+/*
+
+@layer components {
+  .btn-primary {
+    @apply py-2 px-4 bg-blue-200;
+  }
+}
+
+*/
