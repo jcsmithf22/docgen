@@ -25,5 +25,5 @@ test:
 
 production:
   <<: *default
-  database: doc_gen_production
+  database: <%= ENV['DATABASE_URL'] %>
 #  database: storage/production.sqlite3
