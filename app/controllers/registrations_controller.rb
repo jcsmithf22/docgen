@@ -1,7 +1,5 @@
 class RegistrationsController < ApplicationController
-  include ApplicationHelper
   skip_before_action :authenticate
-  # before_action :admin?
   before_action :set_invitation, only: %i[ new create ]
 
   def new

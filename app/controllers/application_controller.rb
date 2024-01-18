@@ -13,6 +13,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def admin?
+    unless Current.user.admin?
+      redirect_to root_path, notice: "You are not authorized to view that page"
+    end
+  end
+
   def set_current_request_details
     Current.user_agent = request.user_agent
     Current.ip_address = request.ip
