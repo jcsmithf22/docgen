@@ -20,7 +20,7 @@ class InvitationsController < ApplicationController
   end
 
   def index
-    @invitations = Invitation.all
+    @invitations = Invitation.where(organization_id: Current.user.organization.id)
   end
 
   private

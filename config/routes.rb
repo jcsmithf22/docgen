@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   get 'invitations/new'
   get 'invitations/create'
   get 'invitations/index'
-  get "sign_in", to: "sessions#new"
-  post "sign_in", to: "sessions#create"
+  get "login", to: "sessions#new"
+  post "login", to: "sessions#create"
   get "users/new", to: "registrations#new"
   post "users/new", to: "registrations#create"
   get "users", to: "users#index"

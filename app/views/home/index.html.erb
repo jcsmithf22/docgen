@@ -1,36 +1,42 @@
-<p>Signed as <%= Current.user.email %></p>
-<p>Organization: <%= Current.user.organization.name %></p>
-<p>Role: <%= Current.user.role %></p>
-<p>Verified: <%= Current.user.verified %></p>
+<% provide :title, "Home" %>
 
-<% if Current.user.admin? %>
+<%= render 'shared/sidebar' %>
 
-  <h2 class="font-medium text-lg">Admin section</h2>
+<div class="sm:ml-64">
+  <p>Signed as <%= Current.user.email %></p>
+  <p>Organization: <%= Current.user.organization.name %></p>
+  <p>Role: <%= Current.user.role %></p>
+  <p>Verified: <%= Current.user.verified %></p>
 
-  <div class="flex flex-col w-fit items-start">
-    <%= link_to "Invite user", new_invitation_path %>
-    <%= link_to "Manage users", users_path %>
-    <%= link_to "Manage invites", invitations_path %>
+  <% if Current.user.admin? %>
+
+    <h2 class="font-medium text-lg">Admin section</h2>
+
+    <div class="flex flex-col w-fit items-start">
+      <%= link_to "Invite user", new_invitation_path %>
+      <%= link_to "Manage users", users_path %>
+      <%= link_to "Manage invites", invitations_path %>
+    </div>
+
+  <% end %>
+
+  <h2 class="font-medium text-lg">Login and verification</h2>
+
+  <div>
+    <%= link_to "Change password", edit_password_path %>
   </div>
 
-<% end %>
+  <div>
+    <%= link_to "Change email address", edit_identity_email_path %>
+  </div>
 
-<h2 class="font-medium text-lg">Login and verification</h2>
+  <h2 class="font-medium text-lg">Access history</h2>
 
-<div>
-  <%= link_to "Change password", edit_password_path %>
+  <div>
+    <%= link_to "Devices & Sessions", sessions_path %>
+  </div>
+
+  <br>
+
+  <%= button_to "Log out", Current.session, method: :delete %>
 </div>
-
-<div>
-  <%= link_to "Change email address", edit_identity_email_path %>
-</div>
-
-<h2 class="font-medium text-lg">Access history</h2>
-
-<div>
-  <%= link_to "Devices & Sessions", sessions_path %>
-</div>
-
-<br>
-
-<%= button_to "Log out", Current.session, method: :delete %>

@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
       Current.session = session_record
       puts(Current.user.inspect)
     else
-      redirect_to sign_in_path
+      redirect_to login_path
     end
   end
 

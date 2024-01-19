@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html class="h-full">
 <head>
-  <title>DocGen</title>
+  <title><%= full_title(yield :title) %></title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
@@ -16,7 +16,7 @@
   <%= javascript_importmap_tags %>
 </head>
 
-<body>
+<body class="h-full">
 
 <% if flash.notice %>
   <%= render 'shared/success', message: flash.notice %>
@@ -26,7 +26,11 @@
 <% end %>
 
 <main>
+
   <%= yield %>
+
 </main>
+
 </body>
+
 </html>
