@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "Doc Gen Verification <noreply@verification.minitodos.app>"
+  default from: "Josiah at Reportify <noreply@reportify.app>"
   layout "mailer"
 end
