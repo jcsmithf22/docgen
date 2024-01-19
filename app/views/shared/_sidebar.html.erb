@@ -1,4 +1,4 @@
-<div data-controller="sidebar" data-temporary-turbo>
+<div data-controller="sidebar" id="sidebar">
   <button data-action="click->sidebar#open" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-zinc-500 rounded-lg sm:hidden hover:bg-zinc-100 focus:outline-none focus:ring-2 focus:ring-zinc-200 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:focus:ring-zinc-600">
     <span class="sr-only">Open sidebar</span>
     <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -38,12 +38,28 @@
 
                 <% if Current.user.admin? %>
                   <li>
-                    <%= active_link_to users_path, class: "text-zinc-400 hover:text-white hover:bg-zinc-800 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold", active: "bg-zinc-800 text-white" do %>
-                      <svg class="w-6 h-6 shrink-0" aria-hidden="true" fill="none" viewBox="0 0 14 18">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-2 3h4a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z"/>
+                    <button type="button" aria-controls="admin-sidebar-dropdown" data-collapse-toggle="admin-sidebar-dropdown"
+                            class="group w-full flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold items-center text-zinc-400 hover:text-white hover:bg-zinc-800"
+                    >
+                      <svg class="w-6 h-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
                       </svg>
-                      Users
-                    <% end %>
+                      <span class="flex-grow text-start">Admin</span>
+                      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                      </svg>
+                    </button>
+                    <ul id="admin-sidebar-dropdown" class="py-2 space-y-2 <%= class_names(hidden: !current_page_any?([users_path, invitations_path])) %>">
+                      <li>
+                        <%= active_link_to "Invite User", new_invitation_path, class: "group flex gap-x-3 rounded-md p-2 pl-12 text-sm leading-6 font-semibold", active: "bg-zinc-800 text-white", default: "text-zinc-400 hover:text-white hover:bg-zinc-800" %>
+                      </li>
+                      <li>
+                        <%= active_link_to "Users", users_path, class: "group flex gap-x-3 rounded-md p-2 pl-12 text-sm leading-6 font-semibold", active: "bg-zinc-800 text-white", default: "text-zinc-400 hover:text-white hover:bg-zinc-800" %>
+                      </li>
+                      <li>
+                        <%= active_link_to "Invites", invitations_path, class: "group flex gap-x-3 rounded-md p-2 pl-12 text-sm leading-6 font-semibold", active: "bg-zinc-800 text-white", default: "text-zinc-400 hover:text-white hover:bg-zinc-800" %>
+                      </li>
+                    </ul>
                   </li>
                 <% end %>
                 <li>

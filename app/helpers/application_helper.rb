@@ -34,4 +34,8 @@ module ApplicationHelper
       page_title + " | " + base_title
     end
   end
+
+  def current_page_any?(paths)
+    paths.any? { |path| current_page?(path) }
+  end
 end
