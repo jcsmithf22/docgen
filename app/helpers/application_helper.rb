@@ -21,8 +21,7 @@ module ApplicationHelper
     end
 
     html_options.delete("active")
-    html_options.delete("inactive")
-
+    html_options.delete("default")
     content_tag("a", name || url, html_options, &block)
   end
 

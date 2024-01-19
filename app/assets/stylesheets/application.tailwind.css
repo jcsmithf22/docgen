@@ -10,6 +10,14 @@
     .input {
         @apply rounded-lg w-full text-sm h-10 border-zinc-300;
     }
+
+    .active-sidebar-link {
+        @apply text-white bg-zinc-800;
+    }
+
+    .default-sidebar-link {
+        @apply text-zinc-400 hover:text-white hover:bg-zinc-800;
+    }
 }
 
 @layer utilities {
