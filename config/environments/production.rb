@@ -65,6 +65,10 @@ Rails.application.configure do
   # config.active_job.queue_adapter = :resque
   # config.active_job.queue_name_prefix = "doc_gen_production"
 
+  config.public_file_server.headers = {
+    'Cache-Control' => 'public, max-age=31536000'
+  }
+
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :resend
   config.action_mailer.default_url_options = { host: 'https://reportify.app' }
