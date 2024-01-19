@@ -7,7 +7,7 @@ export default class extends Controller {
 
     open() {
         this.backdropTarget.classList.remove("hidden");
-        this.backdropTarget.classList.add("fadeIn");
+        setTimeout(() => this.backdropTarget.classList.remove("opacity-0"), 0);
         this.sidebarTarget.classList.remove("-translate-x-full");
     }
 
@@ -18,12 +18,10 @@ export default class extends Controller {
     }
 
     close() {
-        this.backdropTarget.classList.remove("fadeIn");
-        this.backdropTarget.classList.add("fadeOut");
+        this.backdropTarget.classList.add("opacity-0");
         this.sidebarTarget.classList.add("-translate-x-full");
         this.exitTimeout = setTimeout(() => {
             this.backdropTarget.classList.add("hidden");
-            this.backdropTarget.classList.remove("fadeOut");
         }, 310);
     }
 }

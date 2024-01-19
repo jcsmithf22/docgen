@@ -6,9 +6,9 @@
     </svg>
   </button>
 
-  <div data-sidebar-target="backdrop" data-action="click->sidebar#close" class="fixed hidden sm:hidden bg-black/50 inset-0 transition-opacity opacity-0"></div>
+  <div data-sidebar-target="backdrop" data-action="click->sidebar#close" class="hidden fixed sm:hidden bg-black/50 inset-0 transition-opacity duration-300 ease-linear opacity-0"></div>
 
-  <aside data-sidebar-target="sidebar" id="default-sidebar" class=" pointer-events-none fixed z-40 top-0 left-0 inset-y-0 w-screen sm:w-64 transition-transform -translate-x-full sm:translate-x-0 duration-300" aria-label="Sidebar">
+  <aside data-sidebar-target="sidebar" id="default-sidebar" class=" pointer-events-none fixed z-40 top-0 left-0 inset-y-0 w-screen sm:w-64 transition-transform -translate-x-full sm:translate-x-0 duration-300 ease-in-out" aria-label="Sidebar">
     <div class="relative mr-16 flex w-full max-w-64 flex-1 h-full">
       <div class="absolute left-full top-0 flex w-16 justify-center pt-5 sm:hidden">
         <button data-action="click->sidebar#close" type="button" class="-m-2.5 p-2.5 pointer-events-auto">
