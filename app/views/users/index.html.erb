@@ -3,6 +3,13 @@
 <%= render 'shared/sidebar' %>
 
 <div class="sm:ml-64">
+
+  <% unless Current.user.verified %>
+    <%= render "shared/notice", message: "Please verify your email" %>
+  <% end %>
+
+  <%= render "shared/bar", organization: @organization.name, page: "Users" %>
+
   <h1>All Users</h1>
 
   <ul>

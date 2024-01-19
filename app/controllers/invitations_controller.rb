@@ -20,7 +20,7 @@ class InvitationsController < ApplicationController
   end
 
   def index
-    @invitations = Invitation.where(organization_id: Current.user.organization.id)
+    @invitations = Invitation.where(organization_id: Current.user.organization_id)
   end
 
   private
