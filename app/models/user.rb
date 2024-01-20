@@ -13,6 +13,7 @@ class User < ApplicationRecord
   belongs_to :organization
   has_many :memberships, dependent: :destroy
   has_many :teams, through: :memberships
+  has_many :owned_teams, class_name: 'Team', foreign_key: 'owner_id'
 
   has_many :sessions, dependent: :destroy
 
