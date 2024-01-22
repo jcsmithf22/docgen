@@ -19,10 +19,10 @@ class Report < ApplicationRecord
   # We are using a wizard to fill out the report, so we need to validate the presence of the fields in each step
 
   # Step 1: General Information
-  validates :title, :status, :step_status, :step_status_date, :next_target_step, :next_target_date, :site_raised_by_id, :site_responsible_id, :product_id, :error_id, :material_code, :order_quantity, :defect_quantity, presence: true, if: :step_one?
+  validates :title, :status, :step_status, :step_status_date, :next_target_step, :next_target_date, :site_raised_by_id, :site_responsible_id, :product_id, :error_id, :material_code, :order_quantity, :defect_quantity, :complaint_number, presence: true, if: :step_one?
 
   # Step 2: Customer Information
-  validates :complaint_number, :customer_id, :customer_name, :company_address, :customer_type, :internal_sales_order_number, :customer_po, presence: true, if: :step_two?
+  validates :customer_id, :customer_name, :company_address, :customer_type, :internal_sales_order_number, :customer_po, presence: true, if: :step_two?
 
   # Step 3: Symptoms and Emergency response actions. This is a nested form, and a different model. Validations will take place in the Symptoms model
 

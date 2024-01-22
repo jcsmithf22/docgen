@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_22_144135) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_22_192719) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -67,6 +67,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_22_144135) do
     t.string "code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "organization_id", null: false
+    t.index ["organization_id"], name: "index_errors_on_organization_id"
   end
 
   create_table "invitations", force: :cascade do |t|
@@ -99,6 +101,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_22_144135) do
     t.string "number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "organization_id", null: false
+    t.index ["organization_id"], name: "index_products_on_organization_id"
   end
 
   create_table "report_memberships", force: :cascade do |t|
@@ -192,6 +196,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_22_144135) do
     t.string "city"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "organization_id", null: false
+    t.index ["organization_id"], name: "index_sites_on_organization_id"
   end
 
   create_table "symptoms", force: :cascade do |t|
@@ -237,9 +243,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_22_144135) do
   add_foreign_key "actions", "root_causes"
   add_foreign_key "actions", "teams"
   add_foreign_key "actions", "users"
+  add_foreign_key "errors", "organizations"
   add_foreign_key "invitations", "organizations"
   add_foreign_key "memberships", "teams"
   add_foreign_key "memberships", "users"
+  add_foreign_key "products", "organizations"
   add_foreign_key "report_memberships", "reports"
   add_foreign_key "report_memberships", "users"
   add_foreign_key "reports", "errors"
@@ -252,6 +260,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_22_144135) do
   add_foreign_key "root_causes", "organizations"
   add_foreign_key "root_causes", "reports"
   add_foreign_key "sessions", "users"
+  add_foreign_key "sites", "organizations"
   add_foreign_key "symptoms", "organizations"
   add_foreign_key "symptoms", "reports"
   add_foreign_key "teams", "organizations"

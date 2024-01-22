@@ -1,4 +1,4 @@
-<% provide :title, "Home" %>
+<% provide :title, "Report Builder" %>
 
 <%= render 'shared/sidebar' %>
 
@@ -10,8 +10,57 @@
 
   <%= render "shared/bar", organization: @organization.name, page: "Report Builder" %>
 
+  <div class="grid grid-cols-1 gap-x-8 gap-y-8 lg:grid-cols-3 p-8 mx-auto max-w-6xl">
+    <div class="px-4 sm:px-0">
+      <h2 class="text-base font-semibold leading-7 text-gray-900">Customer Complaint Information</h2>
+      <p class="mt-1 text-sm leading-6 text-gray-600">This section contains customer details.</p>
+    </div>
 
-  <div class="p-8">
-    <%= link_to 'previous', previous_wizard_path %>
+    <div class="p-8 max-w-2xl mx-auto bg-white rounded-xl ring-1 ring-zinc-900/5 shadow-sm lg:col-span-2 w-full">
+      <%= form_with(model: @report, url: wizard_path, method: :put) do |form| %>
+        <%= form.hidden_field :lock_version %>
+        <%= form.hidden_field :completion, value: "customer complaint" %>
+
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-6">
+          <div class="md:col-span-4 md:row-start-1">
+            <%= form.label :customer_name, class: "default-label" %>
+            <%= form.text_field :customer_name, value: @report.customer_name, class: "default-input" %>
+          </div>
+
+          <div class="md:col-span-2 md:row-start-1">
+            <%= form.label :customer_id, "Customer ID", class: "default-label" %>
+            <%= form.text_field :customer_id, value: @report.customer_id, class: "default-input" %>
+          </div>
+
+          <div class="md:col-span-6 md:row-start-2">
+            <%= form.label :company_address, class: "default-label" %>
+            <%= form.text_field :company_address, value: @report.company_address, class: "default-input" %>
+          </div>
+
+          <div class="md:col-span-2 md:row-start-3">
+            <%= form.label :customer_type, class: "default-label" %>
+            <%= form.text_field :customer_type, value: @report.customer_type, class: "default-input" %>
+          </div>
+
+          <div class="md:col-span-3 md:row-start-4">
+            <%= form.label :internal_sales_order_number, class: "default-label" do %>
+              <%= @organization.name %> Sales Order #
+            <% end %>
+            <%= form.text_field :internal_sales_order_number, value: @report.internal_sales_order_number, class: "default-input" %>
+          </div>
+
+          <div class="md:col-span-3 md:row-start-5">
+            <%= form.label :customer_po, "Customer PO #", class: "default-label" %>
+            <%= form.text_field :customer_po, value: @report.customer_po, class: "default-input" %>
+          </div>
+
+        </div>
+        <div class="flex justify-between mt-8">
+          <%= link_to 'Previous', previous_wizard_path, class: "default-button bg-gray-600 hover:bg-gray-500" %>
+          <%= form.submit "Next", class: "default-button" %>
+        </div>
+      <% end %>
+      <%#= link_to 'skip', next_wizard_path %>
+    </div>
   </div>
 </div>

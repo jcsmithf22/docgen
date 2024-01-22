@@ -1,4 +1,4 @@
-<% provide :title, "Home" %>
+<% provide :title, "Report Builder" %>
 
 <%= render 'shared/sidebar' %>
 
@@ -10,33 +10,109 @@
 
   <%= render "shared/bar", organization: @organization.name, page: "Report Builder" %>
 
-  :title, :status, :step_status, :step_status_date, :next_target_step, :next_target_date, :site_raised_by_id,
-  :site_responsible_id, :product_id, :error_id, :material_code, :order_quantity, :defect_quantity
+  <div class="grid grid-cols-1 gap-x-8 gap-y-8 lg:grid-cols-3 p-8 mx-auto max-w-6xl">
+    <div class="px-4 sm:px-0">
+      <h2 class="text-base font-semibold leading-7 text-gray-900">General Information</h2>
+      <p class="mt-1 text-sm leading-6 text-gray-600">This section contains the general information and details
+        concerning the report.</p>
+    </div>
 
-  <div class="p-8">
-    <%= form_with(scope: @report, url: wizard_path) do |form| %>
-      <%= form.hidden_field :lock_version %>
+    <div class="p-8 max-w-2xl mx-auto bg-white rounded-xl ring-1 ring-zinc-900/5 shadow-sm lg:col-span-2 w-full">
+      <%= form_with(model: @report, url: wizard_path, method: :put) do |form| %>
+        <%= form.hidden_field :lock_version %>
+        <%= form.hidden_field :completion, value: "general" %>
 
-      <div>
-        <%= form.label :title %>
-        <%= form.text_field :title %>
-      </div>
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-6">
+          <div class="md:col-span-4 md:row-start-1">
+            <%= form.label :title, class: "default-label" %>
+            <%= form.text_field :title, value: @report.title, class: "default-input" %>
+          </div>
 
-      <div>
-        <%= form.label :status %>
-        <%= form.select :status, %w[Open Closed] %>
-      </div>
+          <div class="md:col-span-2 md:row-start-1">
+            <%= form.label :status, class: "default-label" %>
+            <%= form.select :status, %w[Open Closed Reopened], { selected: @report.status }, { class: "default-select" } %>
+          </div>
 
-      <div>
-        <%= form.label :step_status, "D-Step Status" %>
-        <%= form.text_field :step_status %>
-      </div>
+          <div class="md:col-span-3 md:row-start-2">
+            <%= form.label :step_status, "D-Step Status", class: "default-label" %>
+            <%= form.text_field :step_status, value: @report.step_status, class: "default-input" %>
+          </div>
 
-      <div>
-        <%= form.label :step_status_date, "D-Step Status Date" %>
-        <%= form.date_field :step_status_date %>
-      </div>
-    <% end %>
-    <%= link_to 'skip', next_wizard_path %>
+          <div class="md:col-span-3 xl:col-span-2 md:row-start-2 relative">
+            <%= form.label :step_status_date, "D-Step Status Date", class: "default-label" %>
+            <div data-controller="datepicker">
+              <%= form.text_field :step_status_date, value: @report.step_status_date, data: { datepicker_target: "input" }, class: "default-input" %>
+              <button type="button" data-datepicker-target="toggle" class="absolute top-1.5 right-1.5">
+                <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="md:col-span-3 md:row-start-3">
+            <%= form.label :next_target_step, "Next Target", class: "default-label" %>
+            <%= form.text_field :next_target_step, value: @report.next_target_step, class: "default-input" %>
+          </div>
+
+          <div class="md:col-span-3 xl:col-span-2 md:row-start-3 relative">
+            <%= form.label :next_target_date, "D-Step Status Date", class: "default-label" %>
+            <div data-controller="datepicker">
+              <%= form.text_field :next_target_date, data: { datepicker_target: "input" }, class: "default-input" %>
+              <button type="button" data-datepicker-target="toggle" class="absolute top-1.5 right-1.5">
+                <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="md:col-span-3 md:row-start-4">
+            <%= form.label :site_raised_by_id, class: "default-label" %>
+            <%= form.collection_select :site_raised_by_id, @sites, :id, :name, { selected: @report.site_raised_by_id }, { class: "default-select" } %>
+          </div>
+
+          <div class="md:col-span-3 md:row-start-4">
+            <%= form.label :site_responsible_id, class: "default-label" %>
+            <%= form.collection_select :site_responsible_id, @sites, :id, :name, { selected: @report.site_responsible_id }, { class: "default-select" } %>
+          </div>
+
+          <div class="md:col-span-3 md:row-start-5">
+            <%= form.label :product_id, class: "default-label" %>
+            <%= form.collection_select :product_id, @products, :id, :name, { selected: @report.product_id }, { class: "default-select" } %>
+          </div>
+
+          <div class="md:col-span-3 md:row-start-5">
+            <%= form.label :error_id, class: "default-label" %>
+            <%= form.collection_select :error_id, @errors, :id, :name, { selected: @report.error_id }, { class: "default-select" } %>
+          </div>
+
+          <div class="md:col-span-2 md:row-start-6">
+            <%= form.label :material_code, class: "default-label" %>
+            <%= form.text_field :material_code, value: @report.material_code, class: "default-input" %>
+          </div>
+
+          <div class="md:col-span-2 md:row-start-6">
+            <%= form.label :order_quantity, class: "default-label" %>
+            <%= form.number_field :order_quantity, value: @report.order_quantity, class: "default-input" %>
+          </div>
+
+          <div class="md:col-span-2 md:row-start-6">
+            <%= form.label :defect_quantity, class: "default-label" %>
+            <%= form.number_field :defect_quantity, value: @report.defect_quantity, class: "default-input" %>
+          </div>
+
+          <div class="md:col-span-2 md:row-start-7">
+            <%= form.label :complaint_number, class: "default-label" %>
+            <%= form.text_field :complaint_number, value: @report.complaint_number, class: "default-input" %>
+          </div>
+
+        </div>
+        <div class="flex justify-end mt-8">
+          <%= form.submit "Next", class: "default-button" %>
+        </div>
+      <% end %>
+      <%#= link_to 'skip', next_wizard_path %>
+    </div>
   </div>
 </div>
