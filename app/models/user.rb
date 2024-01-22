@@ -11,9 +11,18 @@ class User < ApplicationRecord
   enum role: { admin: 'admin', member: 'member' }
 
   belongs_to :organization
-  has_many :memberships, dependent: :destroy
+  has_many :memberships
   has_many :teams, through: :memberships
+
   has_many :owned_teams, class_name: 'Team', foreign_key: 'owner_id'
+
+  has_many :action_memberships
+  has_many :actions, through: :action_memberships
+
+  has_many :report_memberships
+  has_many :reports_member_of, through: :report_memberships, source: :report
+
+  has_many :reports
 
   has_many :sessions, dependent: :destroy
 

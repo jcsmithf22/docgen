@@ -33,7 +33,7 @@
       data-transition-leave-to="opacity-0 scale-95"
     >
       <div class="my-1">
-        <%= link_to "Report", users_path, class: "text-zinc-700 block px-4 py-2 text-sm hover:bg-zinc-100 hover:text-zinc-900", role: "menuitem", tabindex: "-1" %>
+        <%= button_to "Report", reports_path, method: :post, class: "w-full text-start text-zinc-700 block px-4 py-2 text-sm hover:bg-zinc-100 hover:text-zinc-900", role: "menuitem", tabindex: "-1" %>
         <%= link_to "Team", users_path, class: "text-zinc-700 block px-4 py-2 text-sm hover:bg-zinc-100 hover:text-zinc-900", role: "menuitem", tabindex: "-1" %>
       </div>
     </div>

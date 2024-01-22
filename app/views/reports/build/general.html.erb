@@ -1,0 +1,42 @@
+<% provide :title, "Home" %>
+
+<%= render 'shared/sidebar' %>
+
+<div class="sm:ml-64">
+
+  <% unless Current.user.verified %>
+    <%= render "shared/notice", message: "Please verify your email" %>
+  <% end %>
+
+  <%= render "shared/bar", organization: @organization.name, page: "Report Builder" %>
+
+  :title, :status, :step_status, :step_status_date, :next_target_step, :next_target_date, :site_raised_by_id,
+  :site_responsible_id, :product_id, :error_id, :material_code, :order_quantity, :defect_quantity
+
+  <div class="p-8">
+    <%= form_with(scope: @report, url: wizard_path) do |form| %>
+      <%= form.hidden_field :lock_version %>
+
+      <div>
+        <%= form.label :title %>
+        <%= form.text_field :title %>
+      </div>
+
+      <div>
+        <%= form.label :status %>
+        <%= form.select :status, %w[Open Closed] %>
+      </div>
+
+      <div>
+        <%= form.label :step_status, "D-Step Status" %>
+        <%= form.text_field :step_status %>
+      </div>
+
+      <div>
+        <%= form.label :step_status_date, "D-Step Status Date" %>
+        <%= form.date_field :step_status_date %>
+      </div>
+    <% end %>
+    <%= link_to 'skip', next_wizard_path %>
+  </div>
+</div>

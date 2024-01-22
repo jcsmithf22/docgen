@@ -1,0 +1,17 @@
+<% provide :title, "Home" %>
+
+<%= render 'shared/sidebar' %>
+
+<div class="sm:ml-64">
+
+  <% unless Current.user.verified %>
+    <%= render "shared/notice", message: "Please verify your email" %>
+  <% end %>
+
+  <%= render "shared/bar", organization: @organization.name, page: "Report Builder" %>
+
+
+  <div class="p-8">
+    <%= link_to 'previous', previous_wizard_path %>
+  </div>
+</div>

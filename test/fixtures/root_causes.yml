@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  report: one
+  organization: one
+  title: MyText
+  statement: MyText
+  description: MyText
+  verification_description: MyText
+  notes: MyText
+  verified_date: 2024-01-20
+  verified: false
+
+two:
+  report: two
+  organization: two
+  title: MyText
+  statement: MyText
+  description: MyText
+  verification_description: MyText
+  notes: MyText
+  verified_date: 2024-01-20
+  verified: false

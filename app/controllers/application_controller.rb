@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   private
 
   def authenticate
-    if (session_record = Session.find_by_id(cookies.signed[:session_token]))
+    if (session_record = Session.includes(user: :organization).find_by_id(cookies.signed[:session_token]))
       Current.session = session_record
     else
       redirect_to login_path

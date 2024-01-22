@@ -15,6 +15,9 @@ Rails.application.routes.draw do
     resource :password_reset, only: [:new, :edit, :create, :update]
   end
   resources :invitations, only: [:new, :create, :index]
+  resources :reports do
+    resources :build, controller: "reports/build"
+  end
   root "home#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

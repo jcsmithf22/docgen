@@ -1,0 +1,43 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  report: one
+  organization: one
+  team: one
+  user: one
+  root_cause: one
+  title: MyString
+  description: MyText
+  verification_description: MyText
+  validation_description: MyText
+  notes: MyText
+  due_date: 2024-01-20
+  verified_date: 2024-01-20
+  implemented_date: 2024-01-20
+  validated_date: 2024-01-20
+  removed_date: 2024-01-20
+  verified: false
+  implemented: false
+  validated: false
+  removed: false
+
+two:
+  report: two
+  organization: two
+  team: two
+  user: two
+  root_cause: two
+  title: MyString
+  description: MyText
+  verification_description: MyText
+  validation_description: MyText
+  notes: MyText
+  due_date: 2024-01-20
+  verified_date: 2024-01-20
+  implemented_date: 2024-01-20
+  validated_date: 2024-01-20
+  removed_date: 2024-01-20
+  verified: false
+  implemented: false
+  validated: false
+  removed: false
