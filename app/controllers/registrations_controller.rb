@@ -25,12 +25,12 @@ class RegistrationsController < ApplicationController
   private
 
   def set_invitation
-    if (@invitation = Invitation.find_by(token: params[:token]))
+    if (@invitation = Invitation.includes(:organization).find_by(token: params[:token]))
       if @invitation.accepted
         redirect_to root_path, alert: "That invitation has already been accepted"
       end
+      @organization = @invitation.organization
     else
-      puts(@invitation.inspect)
       redirect_to root_path, alert: "That invitation is invalid"
     end
   end

@@ -1,5 +1,5 @@
 <%= render 'layouts/application/card' do %>
-  <h1 class="text-center text-2xl mb-8">Join <%= @user.organization.name %></h1>
+  <h1 class="text-center text-2xl mb-8">Join <%= @organization.name %></h1>
 
   <%= form_with(url: users_new_path) do |form| %>
     <% if @user.errors.any? %>
