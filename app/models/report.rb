@@ -14,6 +14,10 @@ class Report < ApplicationRecord
   has_many :symptoms, dependent: :destroy
   has_many :report_memberships, dependent: :destroy
 
+  accepts_nested_attributes_for :symptoms, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :report_memberships, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :actions, allow_destroy: true, reject_if: :all_blank
+
   enum completion: { one: "general", two: "customer complaint", three: "D0", four: "D1", five: "D2", six: "D3", seven: "D4", eight: "D5", nine: "D6", ten: "D7", eleven: "D8", complete: "complete" }
 
   # We are using a wizard to fill out the report, so we need to validate the presence of the fields in each step

@@ -9,3 +9,4 @@ pin "stimulus-dropdown" # @2.1.0
 pin "hotkeys-js" # @3.13.5
 pin "stimulus-use" # @0.51.3
 pin "stimulus-datepicker" # @1.0.6
+pin "stimulus-rails-nested-form" # @4.1.0

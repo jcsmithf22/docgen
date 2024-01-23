@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_22_192719) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_23_154858) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,7 +26,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_22_192719) do
   create_table "actions", force: :cascade do |t|
     t.bigint "report_id", null: false
     t.bigint "organization_id", null: false
-    t.bigint "team_id", null: false
+    t.bigint "team_id"
     t.bigint "user_id", null: false
     t.bigint "root_cause_id"
     t.string "title"
@@ -46,6 +46,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_22_192719) do
     t.integer "lock_version"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "action_type"
     t.index ["organization_id"], name: "index_actions_on_organization_id"
     t.index ["report_id"], name: "index_actions_on_report_id"
     t.index ["root_cause_id"], name: "index_actions_on_root_cause_id"
@@ -115,6 +116,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_22_192719) do
     t.string "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "exists"
     t.index ["report_id"], name: "index_report_memberships_on_report_id"
     t.index ["user_id"], name: "index_report_memberships_on_user_id"
   end
@@ -146,7 +148,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_22_192719) do
     t.string "internal_sales_order_number"
     t.string "customer_po"
     t.string "problem_statement"
-    t.string "problem_description"
+    t.text "problem_description"
     t.date "recommendation_date"
     t.text "recommendation"
     t.date "recognition_date"

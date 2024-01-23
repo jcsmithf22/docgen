@@ -8,5 +8,7 @@ class Action < ApplicationRecord
   has_many :action_memberships, dependent: :destroy
   has_many :members, through: :action_memberships, source: :user
 
-  enum action: { era: 'ERA', ica: 'ICA', pca: 'PCA', pra: 'PRA' }
+  enum action_type: { era: 'ERA', ica: 'ICA', pca: 'PCA', pra: 'PRA' }
+
+  accepts_nested_attributes_for :members, allow_destroy: true, reject_if: :all_blank
 end

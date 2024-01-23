@@ -1,5 +1,5 @@
 class Invitation < ApplicationRecord
-  belongs_to :organization
+  belongs_to :organization, strict_loading: false
 
   before_create :generate_token
 

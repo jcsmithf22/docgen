@@ -1,5 +1,5 @@
 class Organization < ApplicationRecord
-  has_many :users
+  has_many :users, strict_loading: false
   has_many :teams
   has_many :reports
   has_many :root_causes

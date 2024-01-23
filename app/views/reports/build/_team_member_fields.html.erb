@@ -1,0 +1,49 @@
+<%# locals: (f:) -%>
+
+<% user_exists = f.object.exists.nil? ? true : f.object.exists %>
+
+<div class="grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-6 md:col-span-6 nested-form-wrapper p-8 rounded-lg bg-emerald-50 border-emerald-100 border relative" data-new-record="<%= f.object.new_record? %>" data-controller="toggle">
+
+  <div class="md:col-span-3 md:row-start-1 <%= 'hidden' unless user_exists %>" data-toggle-target="change">
+    <%= f.label :user_id, class: "default-label" %>
+    <%= f.collection_select :user_id, @users, :id, :full_name, { selected: f.object.user_id, include_blank: true }, { class: "default-select", data: { toggle_target: "clear" } } %>
+  </div>
+
+  <div class="md:col-span-6 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-6 <%= 'hidden' if user_exists %>" data-toggle-target="change">
+
+    <div class="md:col-span-3 md:row-start-1">
+      <%= f.label :name, class: "default-label" %>
+      <%= f.text_field :name, class: "default-input", data: { toggle_target: "clear" } %>
+    </div>
+
+
+    <div class="md:col-span-3 md:row-start-1">
+      <%= f.label :department, class: "default-label" %>
+      <%= f.text_field :department, class: "default-input", data: { toggle_target: "clear" } %>
+    </div>
+
+    <div class="md:col-span-3 md:row-start-2">
+      <%= f.label :email, class: "default-label" %>
+      <%= f.text_field :email, class: "default-input", data: { toggle_target: "clear" } %>
+    </div>
+
+    <div class="md:col-span-3 md:row-start-2">
+      <%= f.label :phone, class: "default-label" %>
+      <%= f.text_field :phone, class: "default-input", data: { toggle_target: "clear" } %>
+    </div>
+  </div>
+
+  <div class="md:col-span-3">
+    <%= f.label :role, class: "default-label" %>
+    <%= f.text_field :role, class: "default-input" %>
+  </div>
+
+  <div class="md:col-span-3 flex gap-x-2 items-center <%= 'md:row-start-3' unless user_exists %>" data-toggle-target="button">
+    <%= f.check_box :exists, checked: user_exists, class: "h-4 w-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-600", data: { action: "click->toggle#toggle" } %>
+    <%= f.label :exists, "Existing User", class: "default-label" %>
+  </div>
+
+  <button type="button" class="p-2 absolute top-1 right-1 hover:bg-emerald-200 rounded-md text-sm text-emerald-800" data-action="nested-form#remove">Remove</button>
+
+  <%= f.hidden_field :_destroy %>
+</div>
