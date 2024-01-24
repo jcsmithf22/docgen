@@ -10,7 +10,6 @@ gem "propshaft"
 
 # Use sqlite3 as the database for Active Record
 # gem "sqlite3", "~> 1.4"
-gem "pg", "~> 1.1"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -78,3 +77,7 @@ gem "authentication-zero", "~> 3.0"
 gem "bcrypt", "~> 3.1.7"
 
 gem "resend", "~> 0.9.0"
+
+gem "dockerfile-rails", ">= 1.6", :group => :development
+
+gem "pg", "~> 1.5"

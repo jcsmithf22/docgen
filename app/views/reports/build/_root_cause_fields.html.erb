@@ -1,0 +1,46 @@
+<%# locals: (f:) -%>
+
+<div class="grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-6 md:col-span-6 nested-form-wrapper p-8 rounded-lg bg-fuchsia-50 border-fuchsia-100 border relative" data-new-record="<%= f.object.new_record? %>">
+  <%= f.hidden_field :lock_version %>
+  <%= f.hidden_field :organization_id, value: @organization.id %>
+
+  <div class="md:col-span-4 md:row-start-1">
+    <%= f.label :title, class: "default-label" %>
+    <%= f.text_field :title, class: "default-input" %>
+  </div>
+
+  <div class="md:col-span-4 md:row-start-2">
+    <%= f.label :statement, class: "default-label" %>
+    <%= f.text_field :statement, class: "default-input" %>
+  </div>
+
+  <div class="md:col-span-6 md:row-start-3">
+    <%= f.label :description, class: "default-label" %>
+    <%= f.text_area :description, class: "default-input", rows: 3 %>
+  </div>
+
+  <div class="md:col-span-6 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-6" data-controller="checked">
+
+    <div class="md:col-span-3 flex gap-x-2 items-center">
+      <%= f.check_box :verified, checked: f.object.verified, class: "h-4 w-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-600", data: { action: "click->checked#toggle", checked_target: "checkbox" } %>
+      <%= f.label :verified, "Verified", class: "default-label" %>
+    </div>
+
+    <div class="md:col-span-6 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-6 <%= "hidden" unless f.object.verified %>" data-checked-target="container">
+
+      <div class="md:col-span-3 xl:col-span-2 md:row-start-1 relative">
+        <%= f.label :verified_date, class: "default-label" %>
+        <%= f.date_field :verified_date, class: "default-input" %>
+      </div>
+
+      <div class="md:col-span-6 md:row-start-2">
+        <%= f.label :verification_description, class: "default-label" %>
+        <%= f.text_area :verification_description, class: "default-input", rows: "3" %>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="p-2 absolute top-1 right-1 hover:bg-fuchsia-200 rounded-md text-sm text-fuchsia-800" data-action="nested-form#remove">Remove</button>
+
+  <%= f.hidden_field :_destroy %>
+</div>

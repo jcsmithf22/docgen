@@ -1,11 +1,11 @@
 class Reports::BuildController < ApplicationController
   include Wicked::Wizard
 
-  steps :general, :customer, :symptoms, :team_members, :problem, :containment_actions, :root_cause, :corrective_actions, :preventive_actions, :recommendation, :recognition
+  steps :general, :customer, :symptoms, :team_members, :problem, :containment_actions, :root_causes, :corrective_actions, :prevent_actions, :recommendation, :recognition
 
   def show
     @organization = Current.user.organization
-    @report = Report.includes(:symptoms, :report_memberships, :actions).find(params[:report_id])
+    @report = Report.includes(:symptoms, :report_memberships, :root_causes, actions: :action_memberships).find(params[:report_id])
     case step
     when :general
       @sites = @organization.sites
@@ -18,7 +18,28 @@ class Reports::BuildController < ApplicationController
       @users = @organization.users
       @report.report_memberships.build if @report.report_memberships.empty?
     when :containment_actions
-      @report.actions.build if @report.actions.empty?
+      # build a default action if the report has no actions of type ica
+      if @report.actions.none? { |a| a.ica? }
+        action = @report.actions.build(action_type: :ica)
+        action.action_memberships.build
+      end
+      @users = @organization.users
+    when :root_causes
+      @report.root_causes.build if @report.root_causes.empty?
+    when :corrective_actions
+      if @report.actions.none? { |a| a.pca? }
+        action = @report.actions.build(action_type: :pca)
+        action.action_memberships.build
+      end
+      @users = @organization.users
+      @root_causes = @report.root_causes
+    when :prevent_actions
+      if @report.actions.none? { |a| a.pra? }
+        action = @report.actions.build(action_type: :pra)
+        action.action_memberships.build
+      end
+      @users = @organization.users
+      @root_causes = @report.root_causes
     else
       # do nothing
     end
@@ -26,7 +47,8 @@ class Reports::BuildController < ApplicationController
   end
 
   def update
-    @report = Report.includes(:symptoms, :report_memberships, :actions).find(params[:report_id])
+    puts(params)
+    @report = Report.includes(:symptoms, :report_memberships, :root_causes, actions: :action_memberships).find(params[:report_id])
     @report.update(report_params)
     @organization = Current.user.organization
     case step
@@ -39,6 +61,20 @@ class Reports::BuildController < ApplicationController
     when :team_members
       unless @report.valid?
         @users = @organization.users
+      end
+    when :containment_actions
+      unless @report.valid?
+        @users = @organization.users
+      end
+    when :corrective_actions
+      unless @report.valid?
+        @users = @organization.users
+        @root_causes = @report.root_causes
+      end
+    when :prevent_actions
+      unless @report.valid?
+        @users = @organization.users
+        @root_causes = @report.root_causes
       end
     else
       # do nothing
@@ -97,7 +133,7 @@ class Reports::BuildController < ApplicationController
         :notes, :due_date, :verified_date, :implemented_date, :validated_date,
         :removed_date, :verified, :implemented, :validated, :removed,
         :lock_version, :organization_id, :team_id, :user_id, :root_cause_id, :action_type,
-        :_destroy
+        :_destroy, action_memberships_attributes: [:id, :user_id, :_destroy]
       ]
     )
   end

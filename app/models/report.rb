@@ -17,6 +17,7 @@ class Report < ApplicationRecord
   accepts_nested_attributes_for :symptoms, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :report_memberships, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :actions, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :root_causes, allow_destroy: true, reject_if: :all_blank
 
   enum completion: { one: "general", two: "customer complaint", three: "D0", four: "D1", five: "D2", six: "D3", seven: "D4", eight: "D5", nine: "D6", ten: "D7", eleven: "D8", complete: "complete" }
 
@@ -70,6 +71,12 @@ class Report < ApplicationRecord
   def self.next_report_id(organization_id)
     last_report = Report.where(organization_id: organization_id).order(report_id: :desc).first
     last_report ? last_report.report_id + 1 : 1
+  end
+
+  def build_action_with_membership
+    action = self.actions.build
+    action.action_memberships.build
+    action
   end
 
 end

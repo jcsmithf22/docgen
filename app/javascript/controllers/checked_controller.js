@@ -9,7 +9,6 @@ export default class extends Controller {
     }
 
     toggle() {
-        console.log("checked");
         if (this.checkboxTarget.checked) {
             this.containerTarget.classList.remove("hidden");
         } else {

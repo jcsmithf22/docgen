@@ -1,0 +1,8 @@
+<%# locals: (f:) -%>
+
+<div class="md:col-span-5 xl:col-span-4 double-nested-form-wrapper [&>div]:w-full flex gap-x-1 items-center my-1" data-new-record="<%= f.object.new_record? %>">
+  <%= f.collection_select :user_id, @users, :id, :full_name, { selected: f.object.user_id, include_blank: true }, { class: "default-select mt-0" } %>
+  <button type="button" class="p-1 px-1.5 hover:bg-rose-200 rounded-md text-sm text-cyan-800 hover:text-rose-600" data-action="nested-form#remove">Remove</button>
+
+  <%= f.hidden_field :_destroy %>
+</div>

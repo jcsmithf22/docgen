@@ -8,6 +8,39 @@
   <%= f.hidden_field :organization_id, value: @organization.id %>
   <%= f.hidden_field :user_id, value: Current.user.id %>
 
+  <%= f.hidden_field :_destroy %>
+
+  <% if %w[PRA PCA].include?(type) %>
+    <div class="md:col-span-6">
+      <%= f.label :root_cause_id, class: "default-label" %>
+      <%= f.collection_select :root_cause_id, @root_causes, :id, :title, { selected: f.object.root_cause_id, include_blank: true }, { class: "default-select" } %>
+    </div>
+  <% end %>
+
+  <!--  Double nested form-->
+
+  <div class="md:col-span-6" data-controller="nested-form" data-nested-form-wrapper-selector-value='.double-nested-form-wrapper'>
+
+    <template data-nested-form-target="template">
+      <%= f.fields_for :action_memberships, ActionMembership.new, child_index: 'NEW_RECORD' do |action_member_fields| %>
+        <%= render "reports/build/action_user_fields", f: action_member_fields %>
+      <% end %>
+    </template>
+
+    <p class="default-label">Users</p>
+    <div class="grid grid-cols-1 gap-x-6 md:grid-cols-6 mt-1">
+      <%= f.fields_for :action_memberships do |action_member_fields| %>
+        <%= render "reports/build/action_user_fields", f: action_member_fields %>
+      <% end %>
+      <div data-nested-form-target="target"></div>
+    </div>
+
+
+    <button type="button" class="p-1 px-1.5 hover:bg-sky-200 rounded-md text-sm text-sky-800" data-action="nested-form#add">Add
+      user
+    </button>
+  </div>
+
   <div class="md:col-span-4 md:row-start-1">
     <%= f.label :title, class: "default-label" %>
     <%= f.text_field :title, class: "default-input" %>
@@ -15,14 +48,7 @@
 
   <div class="md:col-span-2 xl:col-span-2 md:row-start-1 relative">
     <%= f.label :due_date, class: "default-label" %>
-    <div data-controller="datepicker">
-      <%= f.text_field :due_date, data: { datepicker_target: "input" }, class: "default-input" %>
-      <button type="button" data-datepicker-target="toggle" class="absolute top-1.5 right-1.5">
-        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"/>
-        </svg>
-      </button>
-    </div>
+    <%= f.date_field :due_date, class: "default-input" %>
   </div>
 
   <div class="md:col-span-6 md:row-start-2">
@@ -37,18 +63,11 @@
       <%= f.label :verified, "Verified", class: "default-label" %>
     </div>
 
-    <div class="md:col-span-6 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-6 hidden" data-checked-target="container">
+    <div class="md:col-span-6 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-6 <%= "hidden" unless f.object.verified %>" data-checked-target="container">
 
       <div class="md:col-span-3 xl:col-span-2 md:row-start-1 relative">
         <%= f.label :verified_date, class: "default-label" %>
-        <div data-controller="datepicker">
-          <%= f.text_field :verified_date, data: { datepicker_target: "input" }, class: "default-input" %>
-          <button type="button" data-datepicker-target="toggle" class="absolute top-1.5 right-1.5">
-            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"/>
-            </svg>
-          </button>
-        </div>
+        <%= f.date_field :verified_date, class: "default-input" %>
       </div>
 
       <div class="md:col-span-6 md:row-start-2">
@@ -65,18 +84,11 @@
       <%= f.label :validated, "Validated", class: "default-label" %>
     </div>
 
-    <div class="md:col-span-6 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-6 hidden" data-checked-target="container">
+    <div class="md:col-span-6 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-6 <%= "hidden" unless f.object.validated %>" data-checked-target="container">
 
       <div class="md:col-span-3 xl:col-span-2 md:row-start-1 relative">
         <%= f.label :validated_date, class: "default-label" %>
-        <div data-controller="datepicker">
-          <%= f.text_field :validated_date, data: { datepicker_target: "input" }, class: "default-input" %>
-          <button type="button" data-datepicker-target="toggle" class="absolute top-1.5 right-1.5">
-            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"/>
-            </svg>
-          </button>
-        </div>
+        <%= f.date_field :validated_date, class: "default-input" %>
       </div>
 
       <div class="md:col-span-6 md:row-start-2">
@@ -93,40 +105,31 @@
       <%= f.label :implemented, "Implemented", class: "default-label" %>
     </div>
 
-    <div class="md:col-span-3 xl:col-span-2 md:row-start-2 relative hidden" data-checked-target="container">
+    <div class="md:col-span-3 xl:col-span-2 md:row-start-2 relative <%= "hidden" unless f.object.implemented %>" data-checked-target="container">
       <%= f.label :implemented_date, class: "default-label" %>
-      <div data-controller="datepicker">
-        <%= f.text_field :implemented_date, data: { datepicker_target: "input" }, class: "default-input" %>
-        <button type="button" data-datepicker-target="toggle" class="absolute top-1.5 right-1.5">
-          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"/>
-          </svg>
-        </button>
-      </div>
+      <%= f.date_field :implemented_date, class: "default-input" %>
     </div>
+
   </div>
 
-  <div class="md:col-span-6 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-6" data-controller="checked">
+  <% if %w[ICA].include?(type) %>
+    <div class="md:col-span-6 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-6" data-controller="checked">
 
-    <div class="md:col-span-3 flex gap-x-2 items-center">
-      <%= f.check_box :removed, checked: f.object.implemented, class: "h-4 w-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-600", data: { action: "click->checked#toggle", checked_target: "checkbox" } %>
-      <%= f.label :removed, "Removed", class: "default-label" %>
-    </div>
-
-    <div class="md:col-span-3 xl:col-span-2 md:row-start-2 relative hidden" data-checked-target="container">
-      <%= f.label :removed_date, class: "default-label" %>
-      <div data-controller="datepicker">
-        <%= f.text_field :removed_date, data: { datepicker_target: "input" }, class: "default-input" %>
-        <button type="button" data-datepicker-target="toggle" class="absolute top-1.5 right-1.5">
-          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"/>
-          </svg>
-        </button>
+      <div class="md:col-span-3 flex gap-x-2 items-center">
+        <%= f.check_box :removed, checked: f.object.implemented, class: "h-4 w-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-600", data: { action: "click->checked#toggle", checked_target: "checkbox" } %>
+        <%= f.label :removed, "Removed", class: "default-label" %>
       </div>
+
+      <div class="md:col-span-3 xl:col-span-2 md:row-start-2 relative <%= "hidden" unless f.object.removed %>" data-checked-target="container">
+        <%= f.label :removed_date, class: "default-label" %>
+        <%= f.date_field :removed_date, class: "default-input" %>
+      </div>
+
     </div>
-  </div>
+  <% end %>
 
   <button type="button" class="p-2 absolute top-1 right-1 hover:bg-sky-200 rounded-md text-sm text-sky-800" data-action="nested-form#remove">Remove</button>
 
-  <%= f.hidden_field :_destroy %>
+
 </div>
+
