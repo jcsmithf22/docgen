@@ -81,3 +81,6 @@ gem "resend", "~> 0.9.0"
 gem "dockerfile-rails", ">= 1.6", :group => :development
 
 gem "pg", "~> 1.5"
+
+gem 'solargraph', require: false, group: :development
+gem 'solargraph-rails', require: false, group: :development
