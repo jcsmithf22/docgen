@@ -1,6 +1,6 @@
 <%# locals: (f:) -%>
 
-<div class="grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-6 md:col-span-6 nested-form-wrapper p-8 rounded-lg bg-fuchsia-50 border-fuchsia-100 border relative" data-new-record="<%= f.object.new_record? %>">
+<div class="grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-6 md:col-span-6 nested-form-wrapper p-8 rounded-lg bg-orange-50 border-orange-100 border relative" data-new-record="<%= f.object.new_record? %>">
   <%= f.hidden_field :lock_version %>
   <%= f.hidden_field :organization_id, value: @organization.id %>
 
@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <button type="button" class="p-2 absolute top-1 right-1 hover:bg-fuchsia-200 rounded-md text-sm text-fuchsia-800" data-action="nested-form#remove">Remove</button>
+  <button type="button" class="p-2 absolute top-1 right-1 hover:bg-orange-200 rounded-md text-sm text-orange-800" data-action="nested-form#remove">Remove</button>
 
   <%= f.hidden_field :_destroy %>
 </div>
