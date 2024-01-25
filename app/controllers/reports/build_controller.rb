@@ -79,6 +79,7 @@ class Reports::BuildController < ApplicationController
     else
       # do nothing
     end
+    flash.now.alert = 'Please fill out all required fields' unless @report.errors.empty?
     render_wizard @report
   end
 

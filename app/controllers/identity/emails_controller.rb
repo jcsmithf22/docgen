@@ -24,7 +24,8 @@ class Identity::EmailsController < ApplicationController
   end
 
   def redirect_to_root
-    if @user.email_previously_changed?
+    # if @user.email_previously_changed?
+    if @user.saved_change_to_email?
       resend_email_verification
       redirect_to root_path, notice: "Your email has been changed"
     else
