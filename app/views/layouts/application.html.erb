@@ -14,7 +14,8 @@
 
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag "datepicker", "data-turbo-track": "reload" %>
-  <!--  <link rel="stylesheet" href="https://unpkg.com/stimulus-datepicker@1.0.5/css/datepicker.css" data-turbo-track="reload">-->
+  <meta name="turbo-refresh-scroll" content="preserve">
+  <meta name="turbo-refresh-method" content="morph">
   <%= javascript_importmap_tags %>
 </head>
 
