@@ -13,7 +13,7 @@
   <% if %w[PRA PCA].include?(type) %>
     <div class="md:col-span-6">
       <%= f.label :root_cause_id, class: "default-label" %>
-      <%= f.collection_select :root_cause_id, @root_causes, :id, :title, { selected: f.object.root_cause_id, include_blank: true }, { class: "default-select" } %>
+      <%= f.collection_select :root_cause_id, @root_causes, :id, :title, { selected: f.object.root_cause_id, include_blank: "Select a root cause" }, { class: "default-select" } %>
     </div>
   <% end %>
 

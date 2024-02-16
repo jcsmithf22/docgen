@@ -12,32 +12,34 @@
 
   <div class="grid grid-cols-1 gap-x-8 gap-y-8 lg:grid-cols-3 p-8 mx-auto max-w-6xl">
     <div class="px-4 sm:px-0">
-      <h2 class="text-base font-semibold leading-7 text-zinc-900">Problem</h2>
-      <p class="mt-1 text-sm leading-6 text-zinc-600">Describe the problem in detail. Be thorough.</p>
+      <h2 class="text-base font-semibold leading-7 text-zinc-900">Recognition</h2>
+      <p class="mt-1 text-sm leading-6 text-zinc-600">Recognize team and individual contributions.</p>
     </div>
 
     <div class="p-8 max-w-2xl mx-auto bg-white rounded-xl ring-1 ring-zinc-900/5 shadow-sm lg:col-span-2 w-full">
       <%= form_with(model: @report, url: wizard_path, method: :put) do |form| %>
+
         <%= form.hidden_field :lock_version %>
-        <%= form.hidden_field :completion, value: "D2" %>
+        <%= form.hidden_field :completion, value: "D8" %>
 
         <div class="grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-6">
-          <div class="md:col-span-6 md:row-start-1">
-            <%= form.label :problem_statement, class: "default-label" %>
-            <%= form.text_field :problem_statement, class: "default-input" %>
+          <div class="md:col-span-3">
+
+            <%= form.label :recognition_date, "Recognition Date", class: "default-label" %>
+            <%= form.date_field :recognition_date, class: "default-input" %>
           </div>
 
-          <div class="md:col-span-6 md:row-start-2">
-            <%= form.label :problem_description, class: "default-label" %>
-            <%= form.text_area :problem_description, class: "default-input", rows: 5 %>
+          <div class="md:col-span-6">
+            <%= form.label :recognition, class: "default-label" %>
+            <%= form.text_area :recognition, class: "default-input", rows: 5 %>
           </div>
-
-
         </div>
+
         <div class="flex justify-between mt-12 pt-8 border-t border-zinc-900/10">
           <%= link_to 'Previous', previous_wizard_path, class: "default-button bg-zinc-600 hover:bg-zinc-500" %>
           <%= form.submit "Next", class: "default-button" %>
         </div>
+
       <% end %>
       <%#= link_to 'skip', next_wizard_path %>
     </div>
