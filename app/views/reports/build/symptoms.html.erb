@@ -1,14 +1,6 @@
 <% provide :title, "Report Builder" %>
 
-<%= render 'shared/sidebar' %>
-
-<div class="sm:ml-64">
-
-  <% unless Current.user.verified %>
-    <%= render "shared/notice", message: "Please verify your email" %>
-  <% end %>
-
-  <%= render "shared/bar", organization: @organization.name, page: "Report Builder" %>
+<%= render 'layouts/application/main', page: 'Report Builder', organization: @organization.name do %>
 
   <div class="grid grid-cols-1 gap-x-8 gap-y-8 lg:grid-cols-3 p-8 mx-auto max-w-6xl">
     <div class="px-4 sm:px-0">
@@ -51,4 +43,5 @@
       <%#= link_to 'skip', next_wizard_path %>
     </div>
   </div>
-</div>
+
+<% end %>

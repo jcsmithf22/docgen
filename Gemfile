@@ -32,6 +32,8 @@ gem 'jbuilder'
 # Build wizards
 gem 'wicked'
 
+gem 'view_component'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 

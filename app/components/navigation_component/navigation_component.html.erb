@@ -1,0 +1,39 @@
+<div class="p-4 border-b flex items-center justify-between bg-white sticky top-0 z-20">
+  <div class="flex gap-x-2">
+    <h1 class="font-medium text-2xl"><%= @organization %></h1>
+    <p class="text-gray-500 text-2xl"><%= @page %></p>
+  </div>
+  <div data-controller="dropdown" class="relative inline-block text-left">
+    <button
+      type="button"
+      data-action="dropdown#toggle click@window->dropdown#hide"
+      class="inline-flex w-full justify-center items-center gap-x-1.5 rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-zinc-800"
+      id="new-button"
+      aria-expanded="true"
+      aria-haspopup="true"
+    >
+      <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+      </svg>
+      New
+    </button>
+
+    <div
+      data-dropdown-target="menu"
+      class="hidden transition transform origin-top-center absolute right-0 rounded-md bg-white z-10 mt-2 w-48 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+      role="menu"
+      aria-orientation="vertical"
+      aria-labelledby="new-button"
+      tabindex="-1"
+      data-transition-enter-from="opacity-0 scale-95"
+      data-transition-enter-to="opacity-100 scale-100"
+      data-transition-leave-from="opacity-100 scale-100"
+      data-transition-leave-to="opacity-0 scale-95"
+    >
+      <div class="my-1">
+        <%= button_to "Report", reports_path, method: :post, class: "w-full text-start text-zinc-700 block px-4 py-2 text-sm hover:bg-zinc-100 hover:text-zinc-900", role: "menuitem", tabindex: "-1" %>
+        <%= link_to "Team", users_path, class: "text-zinc-700 block px-4 py-2 text-sm hover:bg-zinc-100 hover:text-zinc-900", role: "menuitem", tabindex: "-1" %>
+      </div>
+    </div>
+  </div>
+</div>

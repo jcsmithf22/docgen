@@ -1,0 +1,15 @@
+<%# locals: (organization:, page:) -%>
+
+<%= render SidebarComponent.new(user: Current.user) %>
+
+<div class="sm:ml-64">
+
+  <% unless Current.user.verified %>
+    <%= render NoticeComponent.new(message: "Please verify your email") %>
+  <% end %>
+
+  <%= render NavigationComponent.new(organization: organization, page: page) %>
+
+  <%= yield %>
+
+</div>

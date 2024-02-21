@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-full">
+<html class="h-full" lang="en">
 <head>
   <title><%= full_title(yield :title) %></title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -22,7 +22,7 @@
 <body class="h-full bg-zinc-100">
 
 <% if flash.notice %>
-  <%= render 'shared/success', message: flash.notice %>
+  <%= render SuccessComponent.new(message: flash.notice) %>
 <% end %>
 <% if flash.alert %>
   <%= render 'shared/alert', message: flash.alert %>

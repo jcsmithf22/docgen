@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Reports::BuildController < ApplicationController
   include Wicked::Wizard
 
